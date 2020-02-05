@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>csv printer</title>
+
+	<script type="text/javascript">
+		var propertyOrder = ["name", "age", "height"];
+
+var csv = new Csv(propertyOrder);
+
+csv.add({ name : "Anders",
+          age : 38,
+          height : "178cm" });
+
+csv.add({ name : "John Doe",
+          age : 50,
+          height : "184cm" });
+
+csv.saveAs("people.csv");
+	</script>
+</head>
+<body>
+       <input type="text" name="formin" />
+       <button onclick="savingfunc();">submit</button>
+</body>
+</html>
