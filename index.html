@@ -1,39 +1,78 @@
-
+<!DOCTYPE html>
+<html lang="en">
 <head>
-	
-	<style type="text/css">
-		video{
-  position:relative;
-  display:block;
-  width:100%; 
-}
-.float-right{
-  position:absolute;
-}
-h2{
-  top:80px;
-  right:0;
-}
-a{
-  top:150px;
-  right:50px;
-  
-  }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="New Survey">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>New Survey</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script type ="text/javascript" src="/socket.io/socket.io.js"></script>
+    <script type ="text/javascript">
+        $(document). ready(function (){
+            var socket = io(); //1
 
-  
-	</style>
+            $('form').submit(function(event){
+                event.preventDefault();
+                var userdata = $('form').serializeArray();
+                socket.emit('client_data', userdata);
+            })
+
+            socket.on('clientdata', function(data) {
+                let new_list = $('.messages').append(JSON.stringify(data));
+            })
+         })
+    </script>
 </head>
-<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" />
-<section class="banner embed-responsive-item">
-  <video class="hidden-sm-down" autoplay="" loop="" controls>
-    <source src="http://techslides.com/demos/sample-videos/small.webm" type="video/webm">
-    <source src="http://techslides.com/demos/sample-videos/small.mp4" type="video/mp4">
-  </video>
-  <div>
-  
-  <input class="update" type="button"  value="close" />
-  </div>
-  <h2 class="float-right">Register for a free cup of Koffi</h2><br>This is litterally an add. <br>
-  <a class="btn btn-primary btn-lg float-right" href="#" role="button"><img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.billboard.com%2Ffiles%2Fmedia%2Fj-cole-gq-cover-2019-billboard-1548.jpg&f=1&nofb=1" id="Ladd" title="Ladd" alt="Well that sucks" height="350" width="350"></a>
- 
-</section>
+<body>
+    <div class="container-survey p-5 w-50 bg-light justify-content-md-center">
+    <div class="row messages bg-success">
+    </div>
+            <form>
+                <div class="form-group row mt-5">
+                    <label for="inputname" class="col-sm-2 col-form-label">Name</label>
+                    <div class="col-sm-10">
+                        <input type="name" class="form-control form-control-sm" id ="user_name" name = "inputname">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="inputlocation" class="col-sm-2 col-form-label">Dojo Location</label>
+                    <div class="col-sm-10">
+                        <select class="form-control form-control-sm" id="user_location" name ="inputlocation">
+                            <option>Texas</option>
+                            <option>Los Angeles</option>
+                            <option>Seattle</option>
+                            <option>Chicago</option>
+                            <option>Washington D.C.</option>
+                        </select>
+                    </div>
+                </div>
+                <fieldset class="form-group">
+                    <div class="row">
+                        <legend class="col-form-label col-sm-2 pt-0">Favorite Language</legend>
+                        <div class="col-sm-10">
+                            <select class="form-control form-control-sm" id="favorite_language" name ="favlanguage">
+                                <option>MEAN</option>
+                                <option>C# Core</option>
+                                <option>Python</option>
+                                <option>Javascript</option>
+                                <option>CSS, HTML</option>
+                            </select>
+                        </div>
+                    </div>
+                </fieldset>
+                <div class="form-group row">
+                    <label for="inputmessage" class="col-sm-2 col-form-label">Comment (optional)</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control form-control-sm" id="comment" name ="inputmessage" rows="5"></textarea>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-12">
+                        <button type="submit" class="btn btn-success float-right">Submit</button>
+                    </div>
+                </div>
+            </form>  
+        </div>
+</body>
+</html>
